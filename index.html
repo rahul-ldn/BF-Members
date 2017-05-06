@@ -211,61 +211,6 @@ L.tileLayer('https://api.mapbox.com/styles/v1/rslux/cj21r8qyp00002qmppuj0ivt6/ti
 //CSV Import
 //Drawing Markers
 
-Papa.parse("https://docs.google.com/spreadsheets/d/1xNl5NPheZpTe56RdjWLwbF1RXtQs4H8XrlbwEFTeyxg/pub?output=csv", {
-    download: true,
- //   header: true,
-    complete: function(results) {
-      console.log(results);
-
-$.each(results.data, function(ib, el) {
-if (ib != 0) {
-  //Name  Acronym Affiliation City  Country Website Principal Principal's Representative  URL Logo Link Location  Latitude  Longitude
-  var name = "";
-  var acronym = "";
-  var affiliation = "";
-  var markericon = "";
-  var website = "";
-  var principal = "";
-  var viceprincipal = "";
-  var logourl = "";
-  var combinedlocation = "";
-  var latitude = "";
-  var longitude = "";
-    $.each(el, function(j, cell) {
-        if (j == 0) {name = cell};
-        if (j == 1) {acronym = cell};
-        if (j == 2) {
-            affiliation = cell;
-            if (affiliation == "Member") {
-                markericon = "";
-              } else {
-                markericon = ""; //for partners
-              }
-            };
-        if (j == 5) {website = cell};
-        if (j == 6) {principal = cell};
-        if (j == 7) {viceprincipal = cell};
-        if (j == 8) {logourl = cell};
-        if (j == 9) {combinedlocation = cell};
-        if (j == 10) {latitude = cell};
-        if (j == 11) {longitude = cell};
-  });
-
-    var marker = L.marker([latitude, longitude]).addTo(mymap)
-    					.bindPopup('<strong>'+name+'<br>'
-    								+affiliation+'<br>'
-    								+'Principal: '+principal+'<br>'
-    								+'Location: '+combinedlocation+'<br>'
-    								+"Website: "+website);
-
-      
-   
-    }
-  });
-    }
-  });
-
-
 var marker = L.marker( -35.2809368, 149.1300092 ).addTo(mymap).bindPopup('<strong>The Commonwealth Scientific and Industrial Research Organisation</strong> CSIRO<br>Principal: <BR>Canberra, Australia');
 var marker = L.marker( 48.2081743, 16.3738189 ).addTo(mymap).bindPopup('<strong>Federal Ministry of Science, Research and Economy</strong> BMWFW<br>Principal: Irene Gabriel<BR>Vienna, Austria');
 var marker = L.marker( 48.0688772, 16.3554987 ).addTo(mymap).bindPopup('<strong>International Institute for Applied Systems Analysis</strong> IIASA<br>Principal: Pavel Kabat<BR>Laxenburg, Austria');
