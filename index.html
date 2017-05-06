@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<title>Belmont Forum Member Map</title>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"
+   integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ=="
+   crossorigin=""/>
+
+
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+<!--somewhere in CSS
+#mapid { height: 180px; }
+-->
+
+	<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"
+   integrity="sha512-A7vV8IFfih/D732iSSKi20u/ooOfj/AGehOKq0f4vLT1Zr2Y+RX7C+w8A1gaSasGtRUZpF/NZgzSAu4/Gc41Lg=="
+   crossorigin=""></script>
+
+
+<!--- Stamen map tiles -->
+<script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js?v1.3.0"></script>
+
+
+  <!-- Load Papa Parse from CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.2.0/papaparse.min.js"></script>
+
+  <!--<link href="style.css" rel="stylesheet" type="text/css" /> -->
+<style type="text/css">
+  body {
+  font: 11px Arial, Helvetica, sans-serif;
+  background: #ffffff ;
+  padding: 0;
+  margin: 0;
+}
+a, a:visited { 
+  outline: none 
+}
+img {
+  border: none;
+}
+
+/* dock - bottom */
+.dock {
+  position: relative; 
+  height: 60px; 
+  text-align: center;
+}
+.dock-container {
+  /*position: absolute;*/
+  height: 60px;
+  background: url(http://www.ndesign-studio.com/demo/css-dock-menu/images/dock-bg2.gif);
+  padding-left: 20px;
+}
+a.dock-item {
+  display: block;
+  width: 40px;
+  color: #000;
+  position: absolute;
+  top: 0px;
+  text-align: center;
+  text-decoration: none;
+  font: bold 12px Arial, Helvetica, sans-serif;
+}
+.dock-item img {
+  border: none; 
+  margin: 5px 10px 0px; 
+  width: 100%; 
+}
+.dock-item span {
+  display: none; 
+  padding-left: 20px;
+}
+
+/* dock2 - top */
+#dock2 {
+  width: 100%;
+  bottom: 0px;
+  height : 60px;
+  /*position: absolute;*/
+  left: 0px;
+}
+.dock-container2 {
+  /*position: absolute; */
+  height: 60px;
+  background: url(http://www.ndesign-studio.com/demo/css-dock-menu/images/dock-bg.gif);
+  padding-left: 20px;
+}
+a.dock-item2 {
+  display: block; 
+  font: bold 12px Arial, Helvetica, sans-serif;
+  width: 40px; 
+  color: #000; 
+  bottom: 0px; 
+  position: absolute;
+  text-align: center;
+  text-decoration: none;
+}
+.dock-item2 span {
+  display: none;
+  padding-left: 20px;
+}
+.dock-item2 img {
+  border: none; 
+  margin: 5px 10px 0px; 
+  width: 100%; 
+}
+</style>  
+  <script type="text/javascript" src="http://www.ndesign-studio.com/demo/css-dock-menu/js/interface.js"></script>
+	
+</head>
+<body>
+
+<!--top dock -->
+<div class="dock" id="dock2">
+  <div class="dock-container2">
+    <a class="dock-item2" href="#"><span>CSIRO, Australia</span><img onmouseover="maptosite(CSIRO)" onmouseout="maptosite(Default)" src="https://yt3.ggpht.com/-VLQECRDnZBY/AAAAAAAAAAI/AAAAAAAAAAA/U-ii5WnH15s/s900-c-k-no-mo-rj-c0xffffff/photo.jpg" alt="CSIRO, Australia" /></a>
+    <a class="dock-item2" href="#"><span>BMWFW, Austria</span><img onmouseover="maptosite(BMWFW)" onmouseout="maptosite(Default)" src="https://www.en.bmwfw.gv.at/_layouts/15/AtoS/BMWFJInternetEN/images/imgHeaderLogo_en.png?ver=20" /></a>
+    <a class="dock-item2" href="#"><span>IIASA, Austria</span><img onmouseover="maptosite(IIASA)" onmouseout="maptosite(Default)" src="http://www.iiasa.ac.at/web/oglogo.png" /></a>
+    <a class="dock-item2" href="#"><span>European Commission</span><img onmouseover="maptosite(EC)" onmouseout="maptosite(Default)" src="https://ec.europa.eu/ec_portal/2016/images/logo/logo-splashpage.png" /></a>
+    <a class="dock-item2" href="#"><span>FAPESP, Brazil</span><img onmouseover="maptosite(FAPESP)" onmouseout="maptosite(Default)" src="http://www.fapesp.br/media/logo_novo_english.gif" /></a>
+    <a class="dock-item2" href="#"><span>NSFC, China</span><img onmouseover="maptosite(NSFC)" onmouseout="maptosite(Default)" src="http://webpages.uncc.edu/ywang32/web_NSFC.png" /></a>
+    <a class="dock-item2" href="#"><span>MOST, Chinese Taipei</span><img onmouseover="maptosite(MOST)" onmouseout="maptosite(Default)" src="https://www.rse.org.uk/wp-content/uploads/2016/08/Ministry-of-Science-and-Technology-for-website-600x300.png" /></a>
+    <a class="dock-item2" href="#"><span>ANR, France</span><img onmouseover="maptosite(ANR)" onmouseout="maptosite(Default)" src="https://upload.wikimedia.org/wikipedia/fr/thumb/7/79/Agence_Nationale_de_la_Recherche.svg/1200px-Agence_Nationale_de_la_Recherche.svg.png" /></a>
+    <a class="dock-item2" href="#"><span>AllEnvi, France</span><img onmouseover="maptosite(AllEnvi)" onmouseout="maptosite(Default)" src="http://www.cvt-allenvi.fr/images/logos/AllEnvi.png" /></a>
+    <a class="dock-item2" href="#"><span>ICSU, France</span><img onmouseover="maptosite(ICSU)" onmouseout="maptosite(Default)" src="http://www.icsu.org/logo.png" /></a>
+    <a class="dock-item2" href="#"><span>ISSC, France</span><img onmouseover="maptosite(ISSC)" onmouseout="maptosite(Default)" src="http://www.worldsocialscience.org/wp-content/themes/worldsocialscience/img/issc-logo.png" /></a>
+    <a class="dock-item2" href="#"><span>DFG, Germany</span><img onmouseover="maptosite(DFG)" onmouseout="maptosite(Default)" src="http://mediathek.dfg.de/typo3conf/ext/dreipc_dfg/Resources/Public/Image/DFG_Logo.svg" /></a>
+    <a class="dock-item2" href="#"><span>BMBF, Germany</span><img onmouseover="maptosite(BMBF)" onmouseout="maptosite(Default)" src="https://www.bmbf.de/site/img/logo.png" /></a>
+</div>
+</div>
+
+<!--dock menu JS options -->
+<script type="text/javascript">
+  
+  $(document).ready(
+    function()
+    {
+      $('#dock').Fisheye( //bottom
+        {
+          maxWidth: 80,
+          items: 'a',
+          itemsText: 'span',
+          container: '.dock-container',
+          itemWidth: 60,
+          proximity: 80,
+          halign : 'center',
+          alignment : 'center',
+          valign : 'center'
+        }
+      )
+      $('#dock2').Fisheye( //top
+        {
+          maxWidth: 80,
+          items: 'a',
+          itemsText: 'span',
+          container: '.dock-container2',
+          itemWidth: 60,
+          proximity: 80,
+          alignment : 'center',
+          valign: 'center',
+          halign : 'center'
+        }
+      )
+    }
+  );
+
+</script>
+
+<div id="mapid" style="width: 1000px; height: 500px;"></div>
+<script>
+
+var mymap = L.map('mapid').setView([30.505, 0.09], 2);
+
+
+// replace "toner" here with "terrain" or "watercolor"
+//var layer = new L.StamenTileLayer("toner-lite");
+//mymap.addLayer(layer);
+
+	L.tileLayer('https://api.mapbox.com/styles/v1/rslux/cj21r8qyp00002qmppuj0ivt6/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoicnNsdXgiLCJhIjoiY2oyMXFzd25jMDAwdDJ3cWFvYmk3NzYzaCJ9.b0CboYbGfrZTa1xApDdE5Q', {
+		maxZoom: 18,
+		attribution: 'ESRI ArcGIS',
+		id: 'mapbox.streets'
+	}).addTo(mymap);
+
+
+
+//**Second** CSV parse—can this be refactored?
+//Drawing Markerts
+Papa.parse("https://docs.google.com/spreadsheets/d/1xNl5NPheZpTe56RdjWLwbF1RXtQs4H8XrlbwEFTeyxg/pub?output=csv", {
+    download: true,
+ //   header: true,
+    complete: function(results) {
+      console.log(results);
+
+$.each(results.data, function(ib, el) {
+if (ib != 0) {
+  //Name  Acronym Affiliation City  Country Website Principal Principal's Representative  URL Logo Link Location  Latitude  Longitude
+  var name = "";
+  var acronym = "";
+  var affiliation = "";
+  var markericon = "";
+  var website = "";
+  var principal = "";
+  var viceprincipal = "";
+  var logourl = "";
+  var combinedlocation = "";
+  var latitude = "";
+  var longitude = "";
+    $.each(el, function(j, cell) {
+        if (j == 0) {name = cell};
+        if (j == 1) {acronym = cell};
+        if (j == 2) {
+            affiliation = cell;
+            if (affiliation == "Member") {
+                markericon = "";
+              } else {
+                markericon = ""; //for partners
+              }
+            };
+        if (j == 5) {website = cell};
+        if (j == 6) {principal = cell};
+        if (j == 7) {viceprincipal = cell};
+        if (j == 8) {logourl = cell};
+        if (j == 9) {combinedlocation = cell};
+        if (j == 10) {latitude = cell};
+        if (j == 11) {longitude = cell};
+  });
+
+    var marker = L.marker([latitude, longitude]).addTo(mymap)
+    					.bindPopup('<strong>'+name+'<br>'
+    								+affiliation+'<br>'
+    								+'Principal: '+principal+'<br>'
+    								+'Location: '+combinedlocation+'<br>'
+    								+"Website: "+website);
+
+      
+   
+    }
+  });
+    }
+  });
+
+
+
+
+</script>
+
+
+ <!--bottom dock -->
+ <div class="dock" id="dock">
+  <div class="dock-container">
+    <a class="dock-item" href="#"><span>MOES, India</span><img onmouseover="maptosite(CSIRO)" onmouseout="maptosite(Default)" src="http://www.moes.gov.in/sites/all/themes/moes/logo.png" alt="CSIRO, Australia" /></a>
+    <a class="dock-item" href="#"><span>CNR-DTA, Italy</span><img onmouseover="maptosite(BMWFW)" onmouseout="maptosite(Default)" src="http://www.imati.cnr.it/images/logoCNR.png" /></a>
+    <a class="dock-item" href="#"><span>JST, Japan</span><img onmouseover="maptosite(IIASA)" onmouseout="maptosite(Default)" src="https://i1.rgstatic.net/ii/institution.image/AS%3A267470374408210%401440781314700_l" /></a>
+    <a class="dock-item" href="#"><span>MEXT, Japan</span><img onmouseover="maptosite(EC)" onmouseout="maptosite(Default)" src="http://www.mext.go.jp/b_menu/hakusho/html/hpab201001/detail/__icsFiles/artimage/2012/10/11/c_pbl_14_4/1326824_001.jpg" /></a>
+    <a class="dock-item" href="#"><span>RCN, Norway</span><img onmouseover="maptosite(FAPESP)" onmouseout="maptosite(Default)" src="http://www.forskningsradet.no/en/Graphic_profile/1185261825437" /></a>
+    <a class="dock-item" href="#"><span>QNRF, Qatar</span><img onmouseover="maptosite(NSFC)" onmouseout="maptosite(Default)" src="https://cdn.qf.com.qa/app/media/33171" /></a>
+    <a class="dock-item" href="#"><span>NRF, South Africa</span><img onmouseover="maptosite(MOST)" onmouseout="maptosite(Default)" src="https://yt3.ggpht.com/-AKBdZFHZTuI/AAAAAAAAAAI/AAAAAAAAAAA/cTZ1OTmxhhw/s900-c-k-no-mo-rj-c0xffffff/photo.jpg" /></a>
+    <a class="dock-item" href="#"><span>SSEESS, Sweden</span><img onmouseover="maptosite(ANR)" onmouseout="maptosite(Default)" src="http://www.sseess.org/wp-content/uploads/2015/08/logo.jpg" /></a>
+    <a class="dock-item" href="#"><span>SRCF, Sweden</span><img onmouseover="maptosite(AllEnvi)" onmouseout="maptosite(Default)" src="http://www.formas.se/css/img/logotype_en.png" /></a>
+    <a class="dock-item" href="#"><span>NWO, The Netherlands</span><img onmouseover="maptosite(ICSU)" onmouseout="maptosite(Default)" src="http://www.ktnetafrica.net/sites/default/files/styles/large/public/logos/NWO.png?itok=oEsHeRSK" /></a>
+    <a class="dock-item" href="#"><span>NERC, United Kingdom</span><img onmouseover="maptosite(ISSC)" onmouseout="maptosite(Default)" src="http://www.nerc.ac.uk/nerc/includes/themes/MasterSite/images/nerc-fb-logo.png" /></a>
+    <a class="dock-item" href="#"><span>NSF, USA</span><img onmouseover="maptosite(DFG)" onmouseout="maptosite(Default)" src="https://www.nsf.gov/news/mmg/media/images/nsf_logo_f_9ac868e6-96e7-4ac4-80c2-66c1ebe96795.jpg" /></a>
+    <a class="dock-item" href="#"><span>USGRP, USA</span><img onmouseover="maptosite(BMBF)" onmouseout="maptosite(Default)" src="http://vintage.joss.ucar.edu/events/2010/ncas/sponsor_logos/USGCRP.png" /></a>
+</div>
+</div>
+
+
+
+</body>
+</html>
