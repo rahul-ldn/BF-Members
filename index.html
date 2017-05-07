@@ -70,6 +70,7 @@ img {
   position: relative; 
   height: 60px; 
   text-align: center;
+  z-index: 100;
 }
 .dock-container {
   position: relative;
@@ -77,6 +78,7 @@ img {
   height: 60px;
  /* background: url(http://www.ndesign-studio.com/demo/css-dock-menu/images/dock-bg2.gif);*/
   padding-left: 20px;
+  z-index: 100;
 }
 a.dock-item {
   display: block;
@@ -106,6 +108,7 @@ a.dock-item {
   position: relative;
   text-align: center;
   left: 0px;
+  z-index: 100;
 }
 .dock-container2 {
   position: relative;
@@ -137,8 +140,8 @@ a.dock-item2 {
 
 </head>
 <body>
+5.7<br><br>
 
-5.6<br><br>
 <!--top dock -->
 <div class="dock" id="dock2">
   <div class="dock-container2">
@@ -199,7 +202,7 @@ a.dock-item2 {
 
 
 <!-- Create the map -->
-<div id="mapid" style="width: 1000px; height: 500px;"></div>
+<div id="mapid" style="width: 1000px; height: 500px; z-index: 90;"></div>
 <script>
 
 var mymap = L.map('mapid').setView([30.505, 0.09], 2);
