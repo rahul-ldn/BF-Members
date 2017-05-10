@@ -211,7 +211,8 @@ a.dock-item2 {
 <div id="mapid" style="width: 1000px; height: 500px; z-index: 90;"></div>
 <script>
 
-var mymap = L.map('mapid').setView([30.505, 0.09], 2).fitBounds([
+var mymap = L.map('mapid').setView([30.505, 0.09], 2);
+  mymap.fitBounds([
       [71.6, -156.75]
       [-43.5, 173.5]
     ]);
