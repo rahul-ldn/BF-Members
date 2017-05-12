@@ -253,7 +253,7 @@ var mSSEESS = L.marker( [59.3293235,   18.0685808  ], {icon: membericon}).addTo(
 var mSRCF = L.marker( [59.3293235,   18.0685808  ], {icon: membericon}).addTo(mymap).bindPopup('<strong>The Swedish Research Council Formas</strong><br>Principal: <BR>Stockholm, Sweden');
 var mNWO = L.marker( [52.0704978,   4.3006999   ], {icon: membericon}).addTo(mymap).bindPopup('<strong>The Netherlands Organisation for Scientific Research</strong> NWO<br>Principal: Dick van der Kroef<BR>The Hague, The Netherlands');
 var mNERC = L.marker( [51.5557739,   -1.7797176  ], {icon: membericon}).addTo(mymap).bindPopup('<strong>Natural Environment Research Council</strong> NERC<br>Principal: Duncan Wingham<BR>Swindon, United Kingdom');
-var mNSF = L.marker( [38.0799697,   -78.1067698 ], {icon: membericon}).addTo(mymap).bindPopup('<strong>National Science Foundation</strong> NSF<br>Principal: <BR>Arlington, VA, United States');
+var mNSF = L.marker( [38.0799697,   -78.1067698 ], {icon: membericon}).addTo(mymap).bindPopup('<strong>National Science Foundation</strong> NSF<br>Principal: <BR>Arlington, VA, United States').openPopup();
 var mUSGRP = L.marker( [38.9071923,   -77.0368707 ], {icon: partnericon}).addTo(mymap).bindPopup('<strong>United States Global Change Research Program</strong> USGRP<br>Principal: Michael Kuperberg<BR>Washington, DC, USA');
 
 </script>
@@ -276,14 +276,14 @@ var mUSGRP = L.marker( [38.9071923,   -77.0368707 ], {icon: partnericon}).addTo(
     <a class="dock-item" href="#"><span>SRCF, Sweden</span><img         onmouseover="mSRCF.setIcon(selectedicon).openPopup();" onmouseout="mSRCF.setIcon(membericon).closePopup();" src="http://bfmembers.weareinquiry.com/srcf.png" /></a>
     <a class="dock-item" href="#"><span>NWO, The Netherlands</span><img onmouseover="mNWO.setIcon(selectedicon).openPopup();" onmouseout="mNWO.setIcon(membericon).closePopup();" src="http://bfmembers.weareinquiry.com/nwo.png" /></a>
     <a class="dock-item" href="#"><span>NERC, United Kingdom</span><img onmouseover="mNERC.setIcon(selectedicon).openPopup();" onmouseout="mNERC.setIcon(membericon).closePopup();" src="http://bfmembers.weareinquiry.com/nerc.png" /></a>
-    <a class="dock-item" href="#"><span>NSF, USA</span><img             onmouseover="mNSF.setIcon(selectedicon).openPopup();" onmouseout="mNSF.setIcon(membericon).closePopup();" src="http://bfmembers.weareinquiry.com/nsf.png" /></a>
+    <a class="dock-item" href="#"><span>NSF, USA</span><img             src="http://bfmembers.weareinquiry.com/nsf.png" /></a>
     <a class="dock-item" href="#"><span>USGRP, USA</span><img           onmouseover="mUSGRP.setIcon(selectedicon).openPopup();" onmouseout="mUSGRP.setIcon(partnericon).closePopup();" src="http://bfmembers.weareinquiry.com/usgrp.png" /></a>
 </div>
 </div>
 
-mNSF.setIcon(selectedicon).openPopup();
 
 <!-- 
+<!-- onmouseover="mNSF.setIcon(selectedicon).openPopup();" onmouseout="mNSF.setIcon(membericon).closePopup();"
 
 <div class="dock" id="dock2">
   <div class="dock-container2">
