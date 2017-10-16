@@ -260,7 +260,28 @@ var mNWO = L.marker( [52.0704978,   4.3006999   ], {icon: membericon}).addTo(mym
 var mNERC = L.marker( [51.5557739,   -1.7797176  ], {icon: membericon}).addTo(mymap).bindPopup('<strong>Natural Environment Research Council</strong> NERC<br>Principal: Duncan Wingham<BR>Swindon, United Kingdom<BR><A HREF="http://www.nerc.ac.uk/">Member Website</A>');
 var mNSF = L.marker( [38.0799697,   -78.1067698 ], {icon: membericon}).addTo(mymap).bindPopup('<strong>National Science Foundation</strong> NSF<br>Principal: <BR>Arlington, VA, United States<BR><A HREF="www.nsf.gov">Member Website</A>');
 var mUSGRP = L.marker( [38.9071923,   -77.0368707 ], {icon: partnericon}).addTo(mymap).bindPopup('<strong>United States Global Change Research Program</strong> USGRP<br>Principal: Michael Kuperberg<BR>Washington, DC, USA<BR><A HREF="http://www.globalchange.gov/">Partner Website</A>');
-</script>
+
+  // Create an empty GeoJSON collection
+var collection = {
+    "type": "FeatureCollection",
+    "features": []
+};
+
+// Iterate the layers of the map
+map.eachLayer(function (layer) {
+    // Check if layer is a marker
+    if (layer instanceof L.Marker) {
+        // Create GeoJSON object from marker
+        var geojson = layer.toGeoJSON();
+        // Push GeoJSON object to collection
+        collection.features.push(geojson);
+    }
+});
+
+// Log GeoJSON collection to console
+console.log(collection);
+  
+  </script>
 
 
 
